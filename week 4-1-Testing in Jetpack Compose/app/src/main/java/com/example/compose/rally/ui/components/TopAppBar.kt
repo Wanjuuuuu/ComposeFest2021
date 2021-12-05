@@ -34,15 +34,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.RallyScreen
@@ -116,6 +116,18 @@ private fun RallyTab(
             Text(text.uppercase(Locale.getDefault()), color = tabTintColor)
         }
     }
+}
+
+@Preview
+@Composable
+fun RallyTopAppBarPreview() {
+    val allScreens = RallyScreen.values().toList()
+    var selectedScreen by rememberSaveable { mutableStateOf(RallyScreen.Accounts) }
+    RallyTopAppBar(
+        allScreens = allScreens,
+        onTabSelected = { selectedScreen = it },
+        currentScreen = selectedScreen
+    )
 }
 
 private val TabHeight = 56.dp

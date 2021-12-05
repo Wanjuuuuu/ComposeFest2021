@@ -21,6 +21,7 @@ class TopAppBarTest {
                 currentScreen = RallyScreen.Accounts
             )
         }
+
         Thread.sleep(5000L)
     }
 
@@ -46,7 +47,7 @@ class TopAppBarTest {
         composeTestRule.setContent {
             RallyTopAppBar(
                 allScreens = allScreens,
-                onTabSelected = { },
+                onTabSelected = {},
                 currentScreen = RallyScreen.Accounts
             )
         }
@@ -60,5 +61,21 @@ class TopAppBarTest {
                 useUnmergedTree = true
             )
             .assertExists()
+    }
+
+    @Test
+    fun rallyTopAppBarTest_selectBillsTab() {
+        val allScreens = RallyScreen.values().toList()
+        var selectedScreen = RallyScreen.Accounts
+        composeTestRule.setContent {
+            RallyTopAppBar(
+                allScreens = allScreens,
+                onTabSelected = { selectedScreen = it },
+                currentScreen = selectedScreen
+            )
+        }
+
+        composeTestRule.onNodeWithContentDescription(RallyScreen.Bills.name).performClick()
+        assert(selectedScreen == RallyScreen.Bills)
     }
 }
